@@ -69,8 +69,8 @@ def main(unused_argv):
 	classifier = tf.estimator.Estimator(model_fn=cnn_model_fn, model_dir="drive/project/store")
 	tensors_to_log = {"probabilities":"softmax_tensor"}
 	logging_hook = tf.train.LoggingTensorHook(tensors=tensors_to_log, every_n_iter=50)
-	#train_input_fn = tf.estimator.inputs.numpy_input_fn(x={"x": train_data}, y=train_labels, batch_size=32, num_epochs=None, shuffle=True)
-	#classifier.train(input_fn=train_input_fn, steps=None)
+	train_input_fn = tf.estimator.inputs.numpy_input_fn(x={"x": train_data}, y=train_labels, batch_size=32, num_epochs=None, shuffle=True)
+	classifier.train(input_fn=train_input_fn, steps=None)
 	eval_input_fn = tf.estimator.inputs.numpy_input_fn(x={"x": eval_data}, y=eval_labels, num_epochs=1, shuffle=False)
 	eval_results = classifier.evaluate(input_fn=eval_input_fn)
 	print(eval_results)
